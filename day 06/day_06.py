@@ -51,7 +51,7 @@ class Day6Test(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    input_file: pathlib.Path = pathlib.Path("./day6/input.txt")
+    input_file: pathlib.Path = pathlib.Path("./day 06/input.txt")
     print(Day6(load_file(input_file)[0]).iterate_str(4))
     print(Day6(load_file(input_file)[0]).iterate_str(14))
     unittest.main(verbosity=2)

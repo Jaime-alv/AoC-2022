@@ -75,7 +75,7 @@ class TestDay1(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    input_file: Path = Path("./day1/input.txt")
+    input_file: Path = Path("./day 01/input.txt")
     print(process_part_1(load_file(input_file)))
     print(process_part_2(load_file(input_file)))
     unittest.main()

@@ -137,7 +137,7 @@ class Day4Test(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    input_file = pathlib.Path("./day4/input.txt")
+    input_file = pathlib.Path("./day 04/input.txt")
     print(part1(input_file))
     print(part2(input_file))
     unittest.main()
