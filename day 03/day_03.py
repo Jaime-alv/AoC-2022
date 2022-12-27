@@ -109,7 +109,7 @@ class TestDay3(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    input_data: pathlib.Path = pathlib.Path("./day3/input.txt")
+    input_data: pathlib.Path = pathlib.Path("./day 03/input.txt")
     # print(add_items(load_file(input_data)))
     print(part2(load_file(input_data)))
     unittest.main(verbosity=2)

@@ -195,7 +195,7 @@ class Day4Test(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    input_file: pathlib.Path = pathlib.Path("./day5/input.txt")
+    input_file: pathlib.Path = pathlib.Path("./day 05/input.txt")
     raw_data: list[str] = load_file(input_file)
     # print(Day5(Stack(raw_data[0:9]).create_dict(),
     #       raw_data[10:]).full_process_part1())
