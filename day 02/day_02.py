@@ -10,82 +10,73 @@ def load_file(file: Path) -> list[str]:
 
 
 class Day2:
-
-    win: list[str] = [
-        'C X',
-        'A Y',
-        'B Z'
-    ]
-
-    tie: list[str] = [
-        'A X',
-        'B Y',
-        'C Z'
-    ]
-
-    loose: list[str] = [
-        'B X',
-        'C Y',
-        'A Z'
-    ]
-
-    pc: dict[str, str] = {
-        'A': 'Rock',
-        'B': 'Paper',
-        'C': 'Scissors'
+    rps: dict[str, int] = {
+        "X": 1,
+        "Y": 2,
+        "Z": 3,
     }
 
-    player: dict[str, str] = {
-        'X': 'Rock',
-        'Y': 'Paper',
-        'Z': 'Scissors'
+    eq: dict[str, str] = {
+        "X": "A",
+        "Y": "B",
+        "Z": "C"
     }
 
-    def __init__(self, data: list[str]) -> None:
-        self.data = data
+    win: dict[str, str] = {
+        "A": "C",
+        "B": "A",
+        "C": "B"
+    }
 
-    def additional_points(self, player: str) -> int:
-        match player:
-            case 'X': return 1
-            case 'Y': return 2
-            case _: return 3
+    loose: dict[str, str] = {
+        "A": "B",
+        "B": "C",
+        "C": "A"
+    }
 
-    def resolve_hand(self, move: str) -> int:
-        if move in self.win:
-            return 6
-        if move in self.tie:
-            return 3
-        return 0
+    rps_letter: dict[str, int] = {
+        "A": 1,
+        "B": 2,
+        "C": 3,
+    }
 
-    def get_player_move(self, move: str) -> int:
-        player: str = move[2]
-        return self.additional_points(player)
+    def day2_part1(self, rounds: list[str]) -> int:
+        points: int = 0
+        for element in rounds:
+            elf = element[0]
+            you = element[2]
 
-    def process_part_1(self) -> int:
-        result: int = 0
-        for hand in self.data:
-            result += self.resolve_hand(hand)
-            result += self.get_player_move(hand)
-        return result
+            points += int(self.rps[you])
 
-    map_input = {'A': 'Rock', 'B': 'Paper', 'C': 'Scissors',
-                 'X': 'Lose', 'Y': 'Draw', 'Z': 'Win'}
-    points_per_shape = {'Rock': 1, 'Paper': 2, 'Scissors': 3}
-    points_per_outcome = {'Lose': 0, 'Draw': 3, 'Win': 6}
+            if elf == self.eq.get(you):
+                points += 3
+            elif ((elf == "A" and you == "Y")
+                    or (elf == "B" and you == "Z")
+                    or (elf == "C" and you == "X")):
+                points += 6
 
-    def points_per_round2(self, move: str) -> int:
-        opponent_shape = self.map_input[move[0]]
-        our_goal = self.map_input[move[2]]
+        return points
 
-        if (opponent_shape, our_goal) in [('Rock', 'Draw'), ('Paper', 'Lose'), ('Scissors', 'Win')]:
-            return self.points_per_outcome[our_goal] + self.points_per_shape['Rock']
-        elif (opponent_shape, our_goal) in [('Rock', 'Win'), ('Paper', 'Draw'), ('Scissors', 'Lose')]:
-            return self.points_per_outcome[our_goal] + self.points_per_shape['Paper']
-        else:
-            return self.points_per_outcome[our_goal] + self.points_per_shape['Scissors']
+    def day2_part2(self, rounds: list[str]) -> int:
+        points: int = 0
+        for element in rounds:
+            elf = element[0]
+            you = element[2]
 
-    def part2(self) -> int:
-        return sum([self.points_per_round2(move) for move in self.data])
+            match you:
+                case "X":
+                    points += 0
+                    result = self.win[elf]
+                    points += int(self.rps_letter[result])
+                case "Y":
+                    points += 3
+                    points += int(self.rps_letter[elf])
+                case _:
+                    points += 6
+                    result = self.loose[elf]
+                    points += int(self.rps_letter[result])
+
+        return points
 
 
 class TestDay2(unittest.TestCase):
@@ -95,19 +86,15 @@ class TestDay2(unittest.TestCase):
         'C Z',
     ]
 
-    base: Day2 = Day2(example)
-
-    def test_enum(self):
-        self.assertEqual(self.base.resolve_hand('A Y'), 6)
-        self.assertEqual(self.base.resolve_hand('B X'), 0)
-        self.assertEqual(self.base.resolve_hand('C Z'), 3)
-
     def test_part_1(self):
-        self.assertEqual(self.base.process_part_1(), 15)
-        self.assertEqual(Day2(load_file(input_file)).process_part_1(), 11906)
-        self.assertEqual(Day2(load_file(input_file)).part2(), 11186)
+        self.assertEqual(Day2().day2_part1(self.example), 15)
+
+    def test_part_2(self):
+        self.assertEqual(Day2().day2_part2(self.example), 12)
 
 
 if __name__ == '__main__':
     input_file: Path = Path("./day 02/input.txt")
+    print(Day2().day2_part1(load_file(input_file)))
+    print(Day2().day2_part2(load_file(input_file)))
     unittest.main()
