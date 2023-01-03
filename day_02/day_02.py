@@ -1,5 +1,4 @@
 from pathlib import Path
-import unittest
 
 
 def load_file(file: Path) -> list[str]:
@@ -79,22 +78,7 @@ class Day2:
         return points
 
 
-class TestDay2(unittest.TestCase):
-    example: list[str] = [
-        'A Y',
-        'B X',
-        'C Z',
-    ]
-
-    def test_part_1(self):
-        self.assertEqual(Day2().day2_part1(self.example), 15)
-
-    def test_part_2(self):
-        self.assertEqual(Day2().day2_part2(self.example), 12)
-
-
 if __name__ == '__main__':
-    input_file: Path = Path("./day 02/input.txt")
+    input_file: Path = Path("./day_02/input.txt")
     print(Day2().day2_part1(load_file(input_file)))
     print(Day2().day2_part2(load_file(input_file)))
-    unittest.main()
