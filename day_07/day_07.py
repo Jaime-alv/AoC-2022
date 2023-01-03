@@ -1,6 +1,5 @@
 
 import re
-import unittest
 from pathlib import Path
 from re import Pattern
 from typing import Any
@@ -34,7 +33,5 @@ class Day07:
                 tmp.clear()
 
 
-
-
 if __name__ == '__main__':
-    unittest.main()
+    pass
