@@ -29,7 +29,7 @@ $ ls
 7214296 k
 """
 
-    example: list[str] = list(raw)
+    example: list[str] = list(filter(lambda x: x != "", raw.splitlines()))
 
     def test_example(self):
-        self.assertListEqual(self.example)
+        self.assertListEqual(self.example[0:3], ["$ cd /", "$ ls", "dir a"])
