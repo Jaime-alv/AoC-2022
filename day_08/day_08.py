@@ -17,23 +17,35 @@ class ForestMatrix:
     def check_all_smaller(self, tree_house: int, trees: list[int]) -> bool:
         return all(map(lambda x: x < tree_house, trees))
 
-    def parse_result(self, tautology: tuple[bool, bool, bool, bool]) -> None:
-        if any(tautology):
-            self.counter += 1
+    def parse_list(self,
+                   number: int,
+                   top: list[int],
+                   down: list[int],
+                   left: list[int],
+                   right: list[int]) -> bool:
+        tautology: tuple[bool, bool, bool, bool] = (
+            self.check_all_smaller(number, top),
+            self.check_all_smaller(number, down),
+            self.check_all_smaller(number, left),
+            self.check_all_smaller(number, right),
+        )
+        return any(tautology)
 
-    def iterate_data(self):
+    def iterate_data(self) -> int:
         for index_row, v_row in enumerate(self.data):
             print(self.parse_line_notice(index_row))
             for i_column, v_column in enumerate((self.data[index_row])):
                 top, down = self.conform_column_list(i_column, index_row)
                 left, right = self.conform_row_list(v_row, i_column)
-                tautology: tuple[bool, bool, bool, bool] = (
-                    self.check_all_smaller(int(v_column), top),
-                    self.check_all_smaller(int(v_column), down),
-                    self.check_all_smaller(int(v_column), left),
-                    self.check_all_smaller(int(v_column), right),
-                )
-                self.parse_result(tautology)
+                number: int = int(v_column)
+                if self.parse_list(
+                        number=number,
+                        top=top,
+                        down=down,
+                        left=left,
+                        right=right):
+                    self.counter += 1
+        return self.counter
 
     def conform_column_list(self, index: int, div: int) -> tuple[list[int], list[int]]:
         tmp: list[int] = []
@@ -49,8 +61,8 @@ class ForestMatrix:
         return f"Parsing line: ({index + 1}/{len(self.data)})"
 
     def part_one(self) -> str:
-        self.iterate_data()
-        return f"Result for part one is: {self.counter}"
+        result: int = self.iterate_data()
+        return f"Result for part one is: {result}"
 
 
 if __name__ == '__main__':
