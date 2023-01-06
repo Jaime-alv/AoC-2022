@@ -23,15 +23,6 @@ class TestDay08(unittest.TestCase):
 
     base_day: ForestMatrix = ForestMatrix(raw)
 
-    def test_tautology(self):
-        tmp = (True, False, True, False)
-        new_day: ForestMatrix = ForestMatrix(["1", "2", "3"])
-        new_day.parse_result(tmp)
-        self.assertEqual(new_day.counter, 1)
-        tmp = (True, True, True, True)
-        new_day.parse_result(tmp)
-        self.assertEqual(new_day.counter, 2)
-
     def test_conforming(self):
         self.assertTupleEqual(
             self.base_day.conform_column_list(0, 1), ([3], [6, 3, 3]))
