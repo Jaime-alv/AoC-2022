@@ -1,11 +1,19 @@
 from pathlib import Path
 
 
-def load_file(file: Path) -> list[str]:
-    with file.open("r") as open_file:
-        parsed = open_file.readlines()
-        clean_data = [e.strip("\n") for e in parsed]
-        return clean_data
+class Puzzle:
+
+    def __init__(self, folder_name: str) -> None:
+        self.file = Path(f"./{folder_name}/input.txt")
+
+    def load_file(self) -> list[str]:
+        with self.file.open("r", encoding='UTF-8') as open_file:
+            parsed = open_file.readlines()
+            clean_data = [e.strip("\n") for e in parsed]
+            return clean_data
+
+    def __call__(self) -> list[str]:
+        return self.load_file()
 
 
 class ForestMatrix:
@@ -66,7 +74,6 @@ class ForestMatrix:
 
 
 if __name__ == '__main__':
-    input_file = Path("./day_08/input.txt")
-
-    forest = ForestMatrix(load_file(input_file))
+    puzzle = Puzzle("day_08")()
+    forest = ForestMatrix(puzzle)
     print(forest.part_one())
