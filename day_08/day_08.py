@@ -18,6 +18,7 @@ class Puzzle:
 
 class ForestMatrix:
     counter: int = 0
+    top_score: int = 0
 
     def __init__(self, data: list[str]) -> None:
         self.data = data
@@ -72,8 +73,54 @@ class ForestMatrix:
         result: int = self.iterate_data()
         return f"Result for part one is: {result}"
 
+    def count_elements_in_list(self, tree_house: int, trees: list[int]) -> int:
+        for index, value in enumerate(trees):
+            if value >= tree_house:
+                return index + 1
+        return len(trees)
+
+    def scenic_score(self, trees: tuple[int, int, int, int]) -> int:
+        return trees[0] * trees[1] * trees[2] * trees[3]
+
+    def conform_scenic_score(self,
+                             tree_house: int,
+                             top: list[int],
+                             down: list[int],
+                             left: list[int],
+                             right: list[int]) -> int:
+        tree_score: tuple[int, int, int, int] = (
+            self.count_elements_in_list(tree_house, top),
+            self.count_elements_in_list(tree_house, down),
+            self.count_elements_in_list(tree_house, left),
+            self.count_elements_in_list(tree_house, right)
+        )
+        return self.scenic_score(tree_score)
+
+    def iterate_data_for_scenic_view(self) -> int:
+        for index_row, v_row in enumerate(self.data):
+            print(self.parse_line_notice(index_row))
+            for i_column, v_column in enumerate((self.data[index_row])):
+                top, down = self.conform_column_list(i_column, index_row)
+                left, right = self.conform_row_list(v_row, i_column)
+                number: int = int(v_column)
+                top.reverse()
+                left.reverse()
+                scenic_score: int = self.conform_scenic_score(
+                    tree_house=number,
+                    top=top,
+                    down=down,
+                    left=left,
+                    right=right
+                )
+                if scenic_score > self.top_score:
+                    self.top_score = scenic_score
+        return self.top_score
+
+    def part_two(self) -> str:
+        result: int = self.iterate_data_for_scenic_view()
+        return f"Result for part two is: {result}"
 
 if __name__ == '__main__':
     puzzle = Puzzle("day_08")()
     forest = ForestMatrix(puzzle)
-    print(forest.part_one())
+    print(forest.part_two())

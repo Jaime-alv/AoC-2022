@@ -60,3 +60,38 @@ class TestDay08(unittest.TestCase):
         new_day: ForestMatrix = ForestMatrix(self.raw)
         new_day.iterate_data()
         self.assertEqual(new_day.counter, 21)
+
+    def test_scenic_factor_by_list(self):
+        trees: list[int] = [3, 0, 3, 7, 3]
+        self.assertEqual(self.base_day.count_elements_in_list(3, trees), 1)
+        self.assertEqual(self.base_day.count_elements_in_list(4, trees), 4)
+        self.assertEqual(self.base_day.count_elements_in_list(8, trees), 5)
+        self.assertEqual(self.base_day.count_elements_in_list(5, [3, 5, 3]), 2)
+
+    def test_reverse_list(self):
+        trees: list[int] = [3, 0, 3, 7, 3]
+        trees.reverse()
+        self.assertListEqual(trees, [3, 7, 3, 0, 3])
+
+    def test_iterate_part_2(self):
+        self.assertEqual(self.base_day.iterate_data_for_scenic_view(), 8)
+
+    def test_tuple_conform(self):
+        tree_house: int = 5
+        top: list[int] = [3, 5, 3]
+        down: list[int] = [3]
+        left: list[int] = [3, 3]
+        right: list[int] = [4, 9]
+        self.assertEqual(self.base_day.conform_scenic_score(
+            tree_house, top, down, left, right), 8)
+
+    def test_example(self):
+        tree_house: int = 5
+        top: list[int] = [3, 5, 3]
+        down: list[int] = [3]
+        left: list[int] = [3, 3]
+        right: list[int] = [4, 9]
+        self.assertEqual(self.base_day.count_elements_in_list(tree_house, top), 2)
+        self.assertEqual(self.base_day.count_elements_in_list(tree_house, down), 1)
+        self.assertEqual(self.base_day.count_elements_in_list(tree_house, left), 2)
+        self.assertEqual(self.base_day.count_elements_in_list(tree_house, right), 2)
